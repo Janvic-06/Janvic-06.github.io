@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Library Management - Library</title>
+  <style>
+    body {
+        font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-image: url("kb.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .book-image {
+      width: 100px;
+      height: 150px;
+    }
+
+    .box {
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      width: 45%;
+      vertical-align: top;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      width: 200px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+     button {
+      padding: 5px 10px;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      background-color: #4CAF50;
+      border-radius: 5px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+  </style>
+  <script>
+    // JavaScript code here
+
+    // Book data (placeholder)
+    var books = [
+      { title: "Wings of fire", author: "APJ Abdul Kalam", subject: "Subject 1", publishDate: "1999", imageUrl: "wings_of_fire.jpeg"},
+      { title: "Iam Malala", author: "Malala Yousafzai", subject: "Subject 1", publishDate: "08-10-2013",imageUrl: "iam_malala.jpeg"},
+      { title: "Indomitable Spirit", author: "APJ Abdul Kalam", subject: "Subject 1", publishDate: "2006",imageUrl: "indomitable_spirit.jpeg"},
+      { title: "Ignited Minds", author: "APJ Abdul Kalam", subject: "Subject 1", publishDate: "2002",imageUrl: "ignited minds.jpeg"},
+      { title: "Harry Potter And The Goblet Of Fire", author: "J K ROWLING", subject: "Subject 2", publishDate: "08-07-2002",imageUrl: "goblet.jpeg"},
+      { title: "Harry Potter And The Chamber Of Secrets", author: "J K ROWLING", subject: "Subject 2", publishDate: "02-07-1998",imageUrl: "chamber.jpeg"},
+      { title: "Harry Potter And The Order Of The Pheonix", author: "J K ROWLING", subject: "Subject 2", publishDate: "21-06-2003",imageUrl: "pheonix.jpeg"},
+      { title: "Harry Potter And The Prisoner Of Azkaban", author: "J K ROWLING", subject: "Subject 2", publishDate: "08-07-1999",imageUrl: "prisoner.jpeg"},
+    ];
+
+    function filterBooks() {
+      // Filter criteria
+      var title = document.getElementById("title").value.toLowerCase();
+      var author = document.getElementById("author").value.toLowerCase();
+      var subject = document.getElementById("subject").value.toLowerCase();
+      var publishDate = document.getElementById("publish-date").value;
+
+      // Apply filters
+      var filteredBooks = books.filter(function (book) {
+        return (
+          book.title.toLowerCase().includes(title) &&
+          book.author.toLowerCase().includes(author) &&
+          book.subject.toLowerCase().includes(subject) &&
+          (publishDate === "" || book.publishDate === publishDate)
+        );
+      });
+
+      updateBookCount(filteredBooks);
+      updateBookList(filteredBooks);
+    }
+
+    function updateBookCount(books) {
+      // Count distinct values for each property
+      var titleCount = countDistinctValues(books, "title");
+      var authorCount = countDistinctValues(books, "author");
+      var subjectCount = countDistinctValues(books, "subject");
+      var publishDateCount = countDistinctValues(books, "publishDate");
+
+      document.getElementById("title-count").textContent = "Title Count: " + titleCount;
+      document.getElementById("author-count").textContent = "Author Count: " + authorCount;
+      document.getElementById("subject-count").textContent = "Subject Count: " + subjectCount;
+      document.getElementById("publish-date-count").textContent = "Publish Date Count: " + publishDateCount;
+    }
+
+    function countDistinctValues(books, property) {
+      // Count distinct values for a given property
+      var distinctValues = new Set(books.map(function (book) {
+        return book[property];
+      }));
+
+      return distinctValues.size;
+    }
+
+    function updateBookList(books) {
+      // Update book list based on filters
+      var bookList = document.getElementById("book-list");
+      bookList.innerHTML = "";
+
+      books.forEach(function (book) {
+        var bookItem = document.createElement("li");
+        var bookTitle = document.createElement("span");
+        var bookImage = document.createElement("img");
+
+        bookTitle.textContent = book.title + " by " + book.author;
+        bookImage.src = book.imageUrl;
+        bookImage.alt = book.title;
+        bookImage.classList.add("book-image");
+
+        bookItem.appendChild(bookImage);
+        bookItem.appendChild(bookTitle);
+        bookList.appendChild(bookItem);
+      });
+    }
+
+    function addBook() {
+      // Add a new book
+      var title = document.getElementById("add-title").value;
+      var author = document.getElementById("add-author").value;
+      var subject = document.getElementById("add-subject").value;
+      var publishDate = document.getElementById("add-publish-date").value;
+      var imageUrl = document.getElementById("add-image-url").value;
+
+      var newBook = { title: title, author: author, subject: subject, publishDate: publishDate, imageUrl: imageUrl };
+
+      books.push(newBook);
+
+
+      updateBookCount(books);
+      updateBookList(books);
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Library Management</h1>
+
+    <div class="box">
+      <h2>Filter</h2>
+      <label for="title">Title:</label>
+      <input type="text" id="title" />
+
+      <label for="author">Author:</label>
+      <input type="text" id="author" />
+
+      <label for="subject">Subject:</label>
+      <input type="text" id="subject" />
+
+      <label for="publish-date">Publish Date:</label>
+      <input type="date" id="publish-date" />
+
+      <label for="add-image-url">Image URL:</label>
+      <input type="text" id="add-image-url" />
+
+      <button onclick="filterBooks()">Apply Filter</button>
+    </div>
+
+    <div class="box">
+      <h2>Book Count</h2>
+      <p id="title-count"></p>
+      <p id="author-count"></p>
+      <p id="subject-count"></p>
+      <p id="publish-date-count"></p>
+    </div>
+
+    <div class="box">
+      <h2>Books</h2>
+      <ul id="book-list"></ul>
+    </div>
+
+    <div class="box">
+      <h2>Add Book</h2>
+      <label for="add-title">Title:</label>
+      <input type="text" id="add-title" />
+
+      <label for="add-author">Author:</label>
+      <input type="text" id="add-author" />
+
+      <label for="add-subject">Subject:</label>
+      <input type="text" id="add-subject" />
+
+      <label for="add-publish-date">Publish Date:</label>
+      <input type="date" id="add-publish-date" />
+
+       <label for="add-image-url">Image URL:</label>
+      <input type="text" id="add-image-url" />
+
+      <button onclick="addBook()">Add Book</button>
+    </div>
+  </div>
+</body>
+</html>

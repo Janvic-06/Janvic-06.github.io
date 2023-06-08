@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Library Management - Login</title>
+  <style>
+    body {
+        font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-image: url("pen.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    .box {
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.3); 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      text-align: center; 
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 50%; 
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+       margin-bottom: 10px;
+    }
+
+    button {
+      padding: 5px 10px;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      background-color: #4CAF50;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Library Management</h1>
+
+    <div class="box">
+      <h2>Login</h2>
+      <label for="username">Username:</label>
+      <input type="text" id="username" />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" />
+
+      <button onclick="login()">Login</button>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Perform login validation here
+      if (username === "admin" && password === "password") {
+        window.location.href = "library.html";
+      } else {
+        alert("Invalid username or password");
+      }
+    }
+  </script>
+</body>
+</html>
+
